@@ -1,13 +1,10 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  template: `
+    <app-header></app-header>
+    <app-info-display></app-info-display>
+  `,
 })
-export class AppComponent {
-  title = 'desafio-bemagro';
-}
+export class AppComponent { }
