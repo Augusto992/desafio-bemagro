@@ -1,8 +1,8 @@
-import { Component  } from '@angular/core';
-import * as Leaflet from 'leaflet';
+import { Component, Input, AfterViewInit, SimpleChanges  } from '@angular/core';
+import * as L from 'leaflet';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
-Leaflet.Icon.Default.imagePath = 'assets/';
+//Leaflet.Icon.Default.imagePath = 'assets/';
 @Component({
   selector: 'app-map',
   standalone: true,
@@ -10,7 +10,24 @@ Leaflet.Icon.Default.imagePath = 'assets/';
   templateUrl: './map.component.html',
   styleUrl: './map.component.css'
 })
-export class MapComponent {
+/*export class MapComponent {
+  private _lat: number = 0;
+  private _lon: number = 0; 
+  @Input() get lat(): number {
+    return this._lat;
+  }
+  set lat(value: number) {
+    this._lat = value;
+  }
+
+  @Input() get lon(): number {
+    return this._lon;
+  }
+  set lon(value: number) {
+    this._lon = value;
+  }
+
+
   map!: Leaflet.Map;
   markers: Leaflet.Marker[] = [];
   options = {
@@ -20,7 +37,7 @@ export class MapComponent {
       })
     ],
     zoom: 16,
-    center: { lat: 28.626137, lng: 79.821603 }
+    center: { lat: this.lat, lng: this.lon }
   }
 
   initMarkers() {
@@ -61,12 +78,27 @@ export class MapComponent {
   markerDragEnd($event: any, index: number) {
     console.log($event.target.getLatLng());
   } 
-}
-/*export class MapComponent implements AfterViewInit {
+}*/
+export class MapComponent implements AfterViewInit {
   private map: any;
+  private _lat!: number;
+  private _lon!: number; 
+  @Input() get lat(): number {
+    return this._lat;
+  }
+  set lat(value: number) {
+    this._lat = value;
+  }
+
+  @Input() get lon(): number {
+    return this._lon;
+  }
+  set lon(value: number) {
+    this._lon = value;
+  }
 
   private initMap(): void {
-    this.map = L.map('map').setView([51.505, -0.09], 13);
+    this.map = L.map('map').setView([this.lat, this.lon], 13);
 
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
@@ -74,9 +106,30 @@ export class MapComponent {
     }).addTo(this.map);
   }
 
+  private initMarker(): void {
+    const data = {
+      position: { lat: this.lat, lng: this.lon },
+      draggable: false
+    };
+    const marker = L.marker(data.position, { draggable: data.draggable })
+    marker.addTo(this.map).bindPopup(`<b>${data.position.lat},  ${data.position.lng}</b>`);
+  }
+
   constructor() { }
 
   ngAfterViewInit(): void {
+    console.log("Init");
+    console.log("lat: ", this.lat, ", lon: ", this.lon);
     this.initMap();
+    this.initMarker();
    }
-}*/
+  
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log("changed");
+    console.log("lat: ", changes['lat'].currentValue, ", lon: ", changes['lon'].currentValue);
+    this.map.panTo({
+      lat: changes['lat'].currentValue,
+      lng: changes['lon'].currentValue
+    });
+  }
+}

@@ -1,2 +1,9 @@
 <p>info-display works!</p>
-<app-map></app-map>
+<app-searchbar (changed)="SearchWeather($event)"></app-searchbar>
+<div *ngIf="showWeather">
+  <p>{{ weatherDetails.weather[0].description }}</p>
+  <app-map 
+    [lat]="weatherDetails.coord.lat"
+    [lon]="weatherDetails.coord.lon"
+  ></app-map>
+</div>

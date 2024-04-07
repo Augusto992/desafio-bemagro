@@ -1,0 +1,5 @@
+<mat-form-field appearence="outline">
+  <mat-label>Digite o nome de uma cidade</mat-label>
+  <input matInput [(ngModel)]="city">
+</mat-form-field>
+<button mat-flat-button (click)="this.changed.emit(this.city)">Buscar</button>

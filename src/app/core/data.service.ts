@@ -5,22 +5,23 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, mergeMap } from 'rxjs/operators';
 
 import { ICityDetails, IWeather } from '../../app/shared/interfaces';
+import { ApiKey } from '../../../environment';
 
 
 @Injectable()
 export class DataService {
   nominatimUrl: string =  'https://nominatim.openstreetmap.org/search?format=json&q=';
-  weatherMapUrl: string = 'https://api.openweathermap.org/data/2.5/weather?lang=pt_br&units=metric&appid=9d3af2b9a21e18f86558b9b400c6986f';
+  weatherMapUrl: string = `https://api.openweathermap.org/data/2.5/weather?lang=pt_br&units=metric&appid=${ApiKey}`;
 
   constructor(private http: HttpClient) { }
   
   getWeatherInfo(city: string): Observable<IWeather> {
-    /*return this.getLatLong(city).pipe(
+    return this.getLatLong(city).pipe(
       mergeMap((cityDetails) => this.http.get<IWeather>(this.weatherMapUrl + `&lat=${cityDetails[0].lat}&lon=${cityDetails[0].lon}`))
       ).pipe(
         catchError(this.handleError)
-      );*/
-      return this.http.get<IWeather>('assets/weather.json');
+      );
+      //return this.http.get<IWeather>('assets/weather.json');
   }
 
   private getLatLong(city: string) : Observable<ICityDetails[]> {
