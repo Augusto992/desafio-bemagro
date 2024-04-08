@@ -1,8 +1,8 @@
 <div class="location-search">
-  <mat-form-field class="location-search-input" appearence="outline">
+  <mat-form-field class="location-search-input" appearance="outline">
     <mat-label>Digite o nome de uma cidade</mat-label>
     <input class="location-search-input" matInput [(ngModel)]="city">
     <mat-hint class="error-message" *ngIf="showError">Cidade inválida. Tente novamente.</mat-hint>
   </mat-form-field>
-  <button mat-flat-button (click)="this.changed.emit(this.city)">Buscar</button>
+  <button class="location-button" mat-flat-button (click)="this.changed.emit(this.city)">Buscar</button>
 </div>

@@ -13,3 +13,9 @@
 .error-message {
   color: red;
 }
+
+.location-button {
+  background: lightblue !important;
+  color: #333333 !important;
+
+}
