@@ -5,7 +5,7 @@
   <mat-spinner class="loading-wheel" *ngIf="isLoading"></mat-spinner>
   <div class="weather-info" *ngIf="showWeather">    
     <div class="weather-info-temp">{{ weatherDetails.main.temp }} °C</div>
-    <div class="weather-info-name">{{ cityName }}</div>
+    <div class="weather-info-name">{{ cityName | capitalize }}</div>
     <img 
       class="weather-info-image"
       src='{{ "/assets/" + weatherDetails.weather[0].icon + ".png" }}'
