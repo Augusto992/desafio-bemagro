@@ -1,0 +1,15 @@
+.location-search {
+  width: 400px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.location-search-input {
+  width: 300px;
+}
+
+.error-message {
+  color: red;
+}

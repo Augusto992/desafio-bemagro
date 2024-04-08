@@ -1,9 +1,35 @@
-<p>info-display works!</p>
-<app-searchbar (changed)="SearchWeather($event)"></app-searchbar>
-<div *ngIf="showWeather">
-  <p>{{ weatherDetails.weather[0].description }}</p>
-  <app-map 
-    [lat]="weatherDetails.coord.lat"
-    [lon]="weatherDetails.coord.lon"
-  ></app-map>
+<div class="weather-block">
+  <h1 class="weather-info-title">Previsão do Tempo</h1>
+  <app-searchbar (changed)="SearchWeather($event)" [showError]="this.showError"></app-searchbar>
+  <img class="weather-logo-image" src='favicon.svg' *ngIf="!showWeather && !isLoading"/>
+  <mat-spinner class="loading-wheel" *ngIf="isLoading"></mat-spinner>
+  <div class="weather-info" *ngIf="showWeather">    
+    <div class="weather-info-temp">{{ weatherDetails.main.temp }} °C</div>
+    <div class="weather-info-name">{{ cityName }}</div>
+    <img 
+      class="weather-info-image"
+      src='{{ "/assets/" + weatherDetails.weather[0].icon + ".png" }}'
+      alt='{{ weatherDetails.weather[0].description | capitalize }}'
+    />
+    <div class="weather-info-desc">{{ weatherDetails.weather[0].description | capitalize }}</div>
+    <div class="weather-info-details">
+      <div class="weather-info-detail">
+        <b>Temperatura mínima:</b> {{ weatherDetails.main.temp_min }}°C
+      </div>
+      <div class="weather-info-detail">
+        <b>Temperatura máxima:</b> {{ weatherDetails.main.temp_max }}°C
+      </div>
+      <div class="weather-info-detail">
+        <b>Humidade: </b> {{ weatherDetails.main.humidity }}%
+      </div>
+
+      <div class="weather-info-detail">
+        <b>Velocidade do vento:</b> {{ weatherDetails.wind.speed }} km/h
+      </div>
+    </div>
+    <app-map 
+      [lat]="weatherDetails.coord.lat"
+      [lon]="weatherDetails.coord.lon"
+    ></app-map>
+  </div>
 </div>
